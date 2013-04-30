@@ -1,0 +1,2 @@
+serviceClass: org.pvk.mimic.client.SubjectDemographicsService
+path: 1DECB1F1532D5CC9AE720F8E6F5B6569.gwt.rpc

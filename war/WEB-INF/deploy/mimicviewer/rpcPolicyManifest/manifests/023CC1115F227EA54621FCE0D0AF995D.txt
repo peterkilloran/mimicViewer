@@ -1,0 +1,2 @@
+serviceClass: org.pvk.mimic.client.GreetingService
+path: 65D2651591A4B1771CB30D920D5D46FF.gwt.rpc

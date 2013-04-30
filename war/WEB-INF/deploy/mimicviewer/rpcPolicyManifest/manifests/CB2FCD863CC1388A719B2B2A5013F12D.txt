@@ -1,0 +1,2 @@
+serviceClass: org.pvk.mimic.client.PatientNoteService
+path: 433AECBDC8E64F438BDB17B96DF952CE.gwt.rpc

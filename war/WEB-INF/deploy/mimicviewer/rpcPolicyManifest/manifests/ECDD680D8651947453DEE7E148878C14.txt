@@ -1,0 +1,2 @@
+serviceClass: org.pvk.mimic.client.LabResultService
+path: 183D13EBED1A6C72245A4B5A53C0C521.gwt.rpc
