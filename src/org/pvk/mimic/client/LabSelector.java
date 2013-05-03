@@ -4,6 +4,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -12,14 +16,19 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LabSelector {
-
+public class LabSelector implements HasHandlers {
+	
+	private HandlerManager handlerManager;
+	
 	private Tree labTree;
 	private MimicData data;
 	private ScrollPanel panel;
 	private MimicDataUtils utils;
 	
 	public LabSelector(MimicData mimicDataObject) {
+		
+		handlerManager = new HandlerManager(this);
+		
 		this.labTree = new Tree();
 		this.data=mimicDataObject;
 		this.utils = new MimicDataUtils();
@@ -141,16 +150,35 @@ public class LabSelector {
 				Label child =(Label) parent.getWidget(0);
 				//fire events
 				System.out.println("checkbox clicked");
-				/*
+        	  	LabSelectionUpdatedEvent e = new LabSelectionUpdatedEvent(child.getText().toString());				
 				if (checked) {
-					addLabToVisualiztion(child.getText().toString());
-					addLabResultsToGrid(child.getText().toString());
+	        	  	e.setSelectionType("selected");
+					//addLabToVisualiztion(child.getText().toString());
+					//addLabResultsToGrid(child.getText().toString());
 				} else {
-					removeLabFromVisualization(child.getText().toString());
-					removeLabResultsFromGrid(child.getText().toString());
+					e.setSelectionType("unselected");
+					//removeLabFromVisualization(child.getText().toString());
+					//removeLabResultsFromGrid(child.getText().toString());
 				}
-				*/
+				fireEvent(e);
 			}});
+
+
   		return hp;
 	}
+	 @Override
+	public void fireEvent(GwtEvent<?> event) {
+		// TODO Auto-generated method stub
+		//System.out.println(handlerManager.isEventHandled(event.getAssociatedType()));
+		//System.out.println(event.getAssociatedType().toString());
+		
+		handlerManager.fireEvent(event);
+	}
+	public HandlerRegistration addLabSelectionUpdatedEventHandler(
+            LabSelectionUpdatedEventHandler handler) {
+		HandlerRegistration hr = handlerManager.addHandler(LabSelectionUpdatedEvent.TYPE, handler);
+        System.out.println(hr.toString());
+		return hr;
+    }
+
 }

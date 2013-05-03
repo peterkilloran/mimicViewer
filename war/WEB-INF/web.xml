@@ -6,6 +6,8 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+
+  
   <servlet>
     <servlet-name>subjectDemographicsServiceImpl</servlet-name>
     <servlet-class>org.pvk.mimic.server.SubjectDemographicsServiceImpl</servlet-class>
@@ -19,6 +21,11 @@
   <servlet>
     <servlet-name>labResultServiceImpl</servlet-name>
     <servlet-class>org.pvk.mimic.server.LabResultServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>chartEventServiceImpl</servlet-name>
+    <servlet-class>org.pvk.mimic.server.ChartEventServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -35,6 +42,13 @@
     <servlet-name>labResultServiceImpl</servlet-name>
     <url-pattern>/mimicviewer/labResults</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>chartEventServiceImpl</servlet-name>
+    <url-pattern>/mimicviewer/chartEvents</url-pattern>
+  </servlet-mapping>
+  
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

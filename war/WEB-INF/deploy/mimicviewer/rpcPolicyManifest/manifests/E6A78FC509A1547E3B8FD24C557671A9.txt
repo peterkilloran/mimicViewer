@@ -1,0 +1,2 @@
+serviceClass: org.pvk.mimic.client.ChartEventService
+path: 340601127067F389F43B83D7B102554C.gwt.rpc

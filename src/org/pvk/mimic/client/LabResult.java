@@ -1,4 +1,5 @@
 package org.pvk.mimic.client;
+
 import java.io.Serializable;
 
 public class LabResult implements Serializable {

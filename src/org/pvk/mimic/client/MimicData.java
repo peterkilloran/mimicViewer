@@ -23,14 +23,9 @@ public class MimicData implements HasHandlers {
 	private SubjectDemographicsServiceAsync subjectDemographicsSvc;
 	private PatientNoteServiceAsync patientNoteSvc;
 	private LabResultServiceAsync labResultSvc;
-	public LabResultServiceAsync getLabResultSvc() {
-		return labResultSvc;
-	}
-
-	public void setLabResultSvc(LabResultServiceAsync labResultSvc) {
-		this.labResultSvc = labResultSvc;
-	}
-
+	private ChartEventServiceAsync chartEventSvc;
+	
+	
 	private Vector<PatientNote> patientNotes;
 	private HashMap<String, PatientNote> hNotes;
 	private HashMap<String, LabResult> hLabs;
@@ -40,6 +35,24 @@ public class MimicData implements HasHandlers {
 	private ArrayList<String> labLoincCodes ;
 	private ArrayList<String> labEventTimes ;
 	
+	private HashMap<Integer, String> hLabEventTimes ;
+
+	private Vector<LabResult> labResults ;
+	private Vector<ChartEvent> bloodPressures;
+
+	private Date minLabDate;
+	private Date maxLabDate;
+	
+	
+	
+	public LabResultServiceAsync getLabResultSvc() {
+		return labResultSvc;
+	}
+
+	public void setLabResultSvc(LabResultServiceAsync labResultSvc) {
+		this.labResultSvc = labResultSvc;
+	}
+
 	public HashMap<String, Vector<LabResult>> gethLabLoincResults() {
 		return hLabLoincResults;
 	}
@@ -65,21 +78,144 @@ public class MimicData implements HasHandlers {
 		this.labEventTimes = labEventTimes;
 	}
 
-	private HashMap<Integer, String> hLabEventTimes ;
-
-	private Vector<LabResult> labResults ;
-
-	private Date minLabDate;
-	private Date maxLabDate;
-
 	public MimicData (int ptID) {
 		this.ID=ptID;		
 		subjectDemographicsSvc = GWT.create(SubjectDemographicsService.class);
 		patientNoteSvc = GWT.create(PatientNoteService.class);
 		labResultSvc = GWT.create(LabResultService.class);
+		chartEventSvc = GWT.create(ChartEventService.class);
 		handlerManager = new HandlerManager(this);
 	}
 
+	public void pullArterialBloodPressure () {
+		AsyncCallback <Vector <ChartEvent>> callback = new AsyncCallback<Vector<ChartEvent>> () {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("failure");
+				caught.printStackTrace(System.out);
+				System.out.println(caught.getMessage().toString());
+			}
+
+			@Override
+			public void onSuccess(Vector<ChartEvent> result) {
+				// TODO Auto-generated method stub
+				System.out.println("success");
+				bloodPressures=result;
+				ChartEventsUpdatedEvent chartEventsUpdated = new ChartEventsUpdatedEvent(result);
+				chartEventsUpdated.setChartEventType("Arterial Blood Pressure");
+				fireEvent(chartEventsUpdated);
+			}
+			
+		};
+		//51 is the MIMIC Chart code for arterial blood pressure....
+		chartEventSvc.getChartEvents(this.ID, 51, callback);
+	}
+	
+	public void pullTemperature() {
+		AsyncCallback <Vector <ChartEvent>> callback = new AsyncCallback<Vector<ChartEvent>> () {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("failure");
+				caught.printStackTrace(System.out);
+				System.out.println(caught.getMessage().toString());
+			}
+
+			@Override
+			public void onSuccess(Vector<ChartEvent> result) {
+				// TODO Auto-generated method stub
+				System.out.println("success");
+				bloodPressures=result;
+				ChartEventsUpdatedEvent chartEventsUpdated = new ChartEventsUpdatedEvent(result);
+				chartEventsUpdated.setChartEventType("Temperature C");
+				fireEvent(chartEventsUpdated);
+			}
+			
+		};
+		//51 is the MIMIC Chart code for arterial blood pressure....
+		chartEventSvc.getChartEvents(this.ID, 676, callback);
+	}
+	public void pullSpO2() {
+		AsyncCallback <Vector <ChartEvent>> callback = new AsyncCallback<Vector<ChartEvent>> () {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("failure");
+				caught.printStackTrace(System.out);
+				System.out.println(caught.getMessage().toString());
+			}
+
+			@Override
+			public void onSuccess(Vector<ChartEvent> result) {
+				// TODO Auto-generated method stub
+				System.out.println("success");
+				bloodPressures=result;
+				ChartEventsUpdatedEvent chartEventsUpdated = new ChartEventsUpdatedEvent(result);
+				chartEventsUpdated.setChartEventType("SpO2");
+				fireEvent(chartEventsUpdated);
+			}
+			
+		};
+		//51 is the MIMIC Chart code for arterial blood pressure....
+		chartEventSvc.getChartEvents(this.ID, 646, callback);
+	}
+	
+	public void pullRespiratoryRate() {
+		AsyncCallback <Vector <ChartEvent>> callback = new AsyncCallback<Vector<ChartEvent>> () {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("failure");
+				caught.printStackTrace(System.out);
+				System.out.println(caught.getMessage().toString());
+			}
+
+			@Override
+			public void onSuccess(Vector<ChartEvent> result) {
+				// TODO Auto-generated method stub
+				System.out.println("success");
+				bloodPressures=result;
+				ChartEventsUpdatedEvent chartEventsUpdated = new ChartEventsUpdatedEvent(result);
+				chartEventsUpdated.setChartEventType("Respiratory Rate");
+				fireEvent(chartEventsUpdated);
+			}
+			
+		};
+		//51 is the MIMIC Chart code for arterial blood pressure....
+		chartEventSvc.getChartEvents(this.ID, 618, callback);
+	}
+	
+	public void pullHeartRate() {
+		AsyncCallback <Vector <ChartEvent>> callback = new AsyncCallback<Vector<ChartEvent>> () {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("failure");
+				caught.printStackTrace(System.out);
+				System.out.println(caught.getMessage().toString());
+			}
+
+			@Override
+			public void onSuccess(Vector<ChartEvent> result) {
+				// TODO Auto-generated method stub
+				System.out.println("success");
+				bloodPressures=result;
+				ChartEventsUpdatedEvent chartEventsUpdated = new ChartEventsUpdatedEvent(result);
+				chartEventsUpdated.setChartEventType("Heart Rate");
+				fireEvent(chartEventsUpdated);
+			}
+			
+		};
+		//51 is the MIMIC Chart code for arterial blood pressure....
+		chartEventSvc.getChartEvents(this.ID, 211, callback);
+	}
+	
 	public void pullLabs() {
 		// Set up the callback object.
 		AsyncCallback< Vector<LabResult> > callback = new AsyncCallback< Vector<LabResult> >() {
@@ -117,11 +253,9 @@ public class MimicData implements HasHandlers {
 				DateTimeFormat df = DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss");
 				setMinLabDate(df.parse(labEventTimes.get(0)));
 				setMaxLabDate(df.parse(labEventTimes.get(labEventTimes.size()-1)));
+				
 				LabResultsUpdatedEvent e = new LabResultsUpdatedEvent(labResults);	        	  
 				fireEvent(e);
-
-
-
 			}};
 			// Make the call to the lab service.
 
@@ -156,6 +290,10 @@ public class MimicData implements HasHandlers {
 			DemographicsUpdatedEventHandler handler) {
 		return handlerManager.addHandler(DemographicsUpdatedEvent.TYPE, handler);
 	}
+	public HandlerRegistration addChartEventsUpdatedEventHandler(
+			ChartEventsUpdatedEventHandler handler) {
+		return handlerManager.addHandler(ChartEventsUpdatedEvent.TYPE, handler);
+	}
 	
 	public HandlerRegistration addLabResultsUpdatedEventHandler(
 			LabResultsUpdatedEventHandler handler) {
@@ -176,5 +314,13 @@ public class MimicData implements HasHandlers {
 
 	public void setMaxLabDate(Date maxLabDate) {
 		this.maxLabDate = maxLabDate;
+	}
+
+	public ChartEventServiceAsync getChartEventSvc() {
+		return chartEventSvc;
+	}
+
+	public void setChartEventSvc(ChartEventServiceAsync chartEventSvc) {
+		this.chartEventSvc = chartEventSvc;
 	}
 }
