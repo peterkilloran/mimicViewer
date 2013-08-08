@@ -31,10 +31,10 @@ public class LabResultServiceImpl extends RemoteServiceServlet implements
 		  
 		try {
 			Class.forName("org.postgresql.Driver");
-			String url = "jdbc:postgresql://localhost:5432/MIMIC2";
+			String url = "jdbc:postgresql://139.52.155.236:5432/MIMIC2";
 			Properties props = new Properties();
-	        props.setProperty("user","postgres");
-	        props.setProperty("password","Pejkpptc88k");
+	        props.setProperty("user","mimic-role");
+	        props.setProperty("password","gerhard2000");
 	        Connection conn = DriverManager.getConnection(url, props);
 	        String strSQL = "SELECT labevents.*, d_labitems.* " +
 	        	"FROM mimic2v26.d_labitems, mimic2v26.labevents " +
@@ -103,6 +103,7 @@ public class LabResultServiceImpl extends RemoteServiceServlet implements
 	        conn.close();
 	        
 		} catch (SQLException e) {
+			e.printStackTrace();
 
 		} catch (ClassNotFoundException e){
 		  	

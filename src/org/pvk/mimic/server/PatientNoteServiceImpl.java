@@ -27,10 +27,10 @@ public class PatientNoteServiceImpl extends RemoteServiceServlet implements
 		  
 		try {
 			Class.forName("org.postgresql.Driver");
-			String url = "jdbc:postgresql://localhost:5432/MIMIC2";
+			String url = "jdbc:postgresql://139.52.155.236:5432/MIMIC2";
 			Properties props = new Properties();
-	        props.setProperty("user","postgres");
-	        props.setProperty("password","Pejkpptc88k");
+	        props.setProperty("user","mimic-role");
+	        props.setProperty("password","gerhard2000");
 	        Connection conn = DriverManager.getConnection(url, props);
 	        String strSQL = "SELECT * FROM mimic2v26.noteevents WHERE subject_ID = " + String.valueOf(subjectID) + ";";
 	        stmt = conn.createStatement();

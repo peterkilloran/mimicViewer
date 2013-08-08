@@ -28,12 +28,19 @@ public class ChartEventServiceImpl extends RemoteServiceServlet implements Chart
 		ResultSet rst = null;
 		  
 		try {
+			//Class.forName("org.postgresql.Driver");
+			//String url = "jdbc:postgresql://localhost:5432/MIMIC2";
+			//Properties props = new Properties();
+	        //props.setProperty("user","postgres");
+	        //props.setProperty("password","Pejkpptc88k");
+	        
 			Class.forName("org.postgresql.Driver");
-			String url = "jdbc:postgresql://localhost:5432/MIMIC2";
+			String url = "jdbc:postgresql://139.52.155.236:5432/MIMIC2";
 			Properties props = new Properties();
-	        props.setProperty("user","postgres");
-	        props.setProperty("password","Pejkpptc88k");
-	        Connection conn = DriverManager.getConnection(url, props);
+	        props.setProperty("user","mimic-role");
+	        props.setProperty("password","gerhard2000");
+			
+			Connection conn = DriverManager.getConnection(url, props);
 	        String strSQL = "SELECT chartevents.* " +
 	        	"FROM mimic2v26.chartevents " +
 	        	"WHERE chartevents.itemid = " + ChartEventType +
